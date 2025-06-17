@@ -47,3 +47,4 @@ export async function handle(req, res, id) {
     json(res, 500, { error: e.message });
   }
 }
+
