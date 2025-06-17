@@ -8,8 +8,5 @@
   "type": "module",
   "author": "Pavlo Karpenko",
   "license": "ISC",
-  "description": "hw_1",
-  "devDependencies": {
-    "@types/node": "^24.0.0"
-  }
+  "description": "hw_1"
 }
