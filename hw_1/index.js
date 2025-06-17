@@ -8,9 +8,11 @@ const server = http.createServer((req, res) => {
   }
   res.writeHead(404).end('Not found');
 });
-
 const PORT = process.env.PORT || 3000;
 
 server.listen(PORT, () => {
   console.log(`🚀  http://localhost:${PORT}`);
+const port = process.env.PORT || 3000;
+server.listen(port, () => {
+  console.log(`🚀  http://localhost:${port}`);
 });

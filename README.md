@@ -1,3 +1,4 @@
+
 # Node Users Service
 
 This project is a simple HTTP server built with Node.js. It exposes REST endpoints to manage users stored in a small JSON file. All source code lives in the `hw_1` directory.
@@ -91,4 +92,14 @@ Returns `204` on success or `404` if not found.
 ```
 
 Users are stored in `hw_1/database.json` in this format.
+
+# NODE_JS_2
+The `hw_1` project has no runtime dependencies. Running `npm install` will not install any packages.
+## Running the project
+
+```bash
+cd hw_1
+npm start
+```
+The server listens on the port defined by the `PORT` environment variable or defaults to `3000`.
 
