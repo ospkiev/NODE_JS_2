@@ -3,10 +3,16 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "node --test"
   },
   "type": "module",
   "author": "Pavlo Karpenko",
   "license": "ISC",
+  "description": "hw_1",
+  "devDependencies": {
+    "@types/node": "^24.0.0"
+  }
+}
   "description": "hw_1"
 }
