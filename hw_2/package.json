@@ -1,5 +1,5 @@
 {
-  "name": "hw_1",
+  "name": "hw_2",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -9,8 +9,5 @@
   "type": "module",
   "author": "Pavlo Karpenko",
   "license": "ISC",
-  "description": "hw_1",
-  "devDependencies": {
-    "@types/node": "^24.0.0"
-  }
+  "description": "habits cli"
 }
