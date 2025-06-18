@@ -1,61 +1,50 @@
 import {
-  createHabit,
-  getAllHabits,
-  markHabitDone,
-  removeHabit,
-  updateHabitData,
-  statsHabits
+  listHabits, getHabits, addHabits,
+  patchHabits, deleteHabits
 } from '../services/habits.service.js';
 
-export function addHabit(opts) {
-  if (!opts.name || !opts.freq) {
-    console.log('Usage: add --name "<text>" --freq <daily|weekly|monthly>');
-    return;
+export async function handle(req, res, id) {
+  try {
+    if (req.method === 'GET' && id === null) {
+      return json(res, 200, await listHabits());
+    }
+    if (req.method === 'GET') {
+      const u = await getHabits(id);
+      return u ? json(res, 200, u) : json(res, 404, { error: 'Not found' });
+    }
+    if (req.method === 'POST') {
+      const body = await bodyJSON(req);
+      return json(res, 201, await addHabits(body));
+    }
+    if (req.method === 'PATCH') {
+      const body = await bodyJSON(req);
+      const u = await patchHabits(id, body);
+      return u ? json(res, 200, u) : json(res, 404, { error: 'Not found' });
+    }
+    if (req.method === 'DELETE') {
+      const ok = await deleteHabits(id);
+      return ok ? json(res, 204) : json(res, 404, { error: 'Not found' });
+    }
+    json(res, 405, { error: 'Method not allowed' });
+  } catch (e) {
+    json(res, 500, { error: e.message });
   }
-  createHabit(opts.name, opts.freq).then((h) => console.log('Added', h.id));
 }
 
-export function listHabits() {
-  getAllHabits().then((list) => {
-    if (!list.length) return console.log('No habits');
-    console.table(list.map(({ id, name, freq }) => ({ id, name, freq })));
-  });
+/* ---------- helpers ---------- */
+function json(res, status, data = null) {
+  res.writeHead(status, { 'Content-Type': 'application/json' });
+  if (data) res.end(JSON.stringify(data));
+  else res.end();
 }
 
-export function markDone(opts) {
-  if (!opts.id) {
-    console.log('Usage: done --id <id>');
-    return;
-  }
-  markHabitDone(opts.id).then((ok) => {
-    if (!ok) console.log('Habit not found');
-  });
-}
-
-export function deleteHabit(opts) {
-  if (!opts.id) {
-    console.log('Usage: delete --id <id>');
-    return;
-  }
-  removeHabit(opts.id).then((ok) => {
-    if (!ok) console.log('Habit not found');
-  });
-}
-
-export function updateHabit(opts) {
-  if (!opts.id) {
-    console.log('Usage: update --id <id> --name "text" --freq <...>');
-    return;
-  }
-  updateHabitData(opts.id, opts.name, opts.freq).then((ok) => {
-    if (!ok) console.log('Habit not found');
-  });
-}
-
-export function showStats() {
-  statsHabits().then((stats) => {
-    stats.forEach((s) => {
-      console.log(`${s.name}: ${s.percent}%`);
+function bodyJSON(req) {
+  return new Promise((resolve, reject) => {
+    let raw = '';
+    req.on('data', (c) => (raw += c));
+    req.on('end', () => {
+      try { resolve(JSON.parse(raw || '{}')); }
+      catch { reject(new Error('Invalid JSON')); }
     });
   });
 }
