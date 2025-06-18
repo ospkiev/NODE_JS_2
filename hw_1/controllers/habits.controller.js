@@ -20,3 +20,7 @@ export function handleDelete(id) {
 export function handleUpdate(id, newName) {
   service.updateHabit(id, newName);
 }
+
+export function handleStats() {
+  service.statsHabits();
+}

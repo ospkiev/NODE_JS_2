@@ -51,3 +51,15 @@ export function updateHabit(id, newName) {
     console.log('Не знайдено');
   }
 }
+
+export function statsHabits() {
+  const habits = model.readHabits();
+  const total = habits.length;
+  const doneCount = habits.filter(h => h.done).length;
+  if (total === 0) {
+    console.log('Немає звичок у списку.');
+  } else {
+    const percent = ((doneCount / total) * 100).toFixed(2);
+    console.log(`✅ Виконано ${doneCount} з ${total} (${percent}%)`);
+  }
+}
