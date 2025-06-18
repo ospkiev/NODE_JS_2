@@ -5,9 +5,22 @@ import { fileURLToPath } from 'node:url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DB = join(__dirname, '..', 'database.json');
 
-const read = async () => JSON.parse(await readFile(DB, 'utf8'));
-const save = async (data) =>
-  writeFile(DB, JSON.stringify(data, null, 2));
+const read = async () => {
+  try {
+    const data = await readFile(DB, 'utf8');
+    return JSON.parse(data);
+  } catch (err) {
+    if (err instanceof SyntaxError) return [];
+    throw new Error(`Failed to read database: ${err.message}`);
+  }
+};
+const save = async (data) => {
+  try {
+    await writeFile(DB, JSON.stringify(data, null, 2));
+  } catch (err) {
+    throw new Error(`Failed to write database: ${err.message}`);
+  }
+};
 
 export async function getAll() {
   return read();
