@@ -1,50 +1,22 @@
-import {
-  listHabits, getHabits, addHabits,
-  patchHabits, deleteHabits
-} from '../services/habits.service.js';
+import * as service from '../services/habits.service.js';
 
-export async function handle(req, res, id) {
-  try {
-    if (req.method === 'GET' && id === null) {
-      return json(res, 200, await listHabits());
-    }
-    if (req.method === 'GET') {
-      const u = await getHabits(id);
-      return u ? json(res, 200, u) : json(res, 404, { error: 'Not found' });
-    }
-    if (req.method === 'POST') {
-      const body = await bodyJSON(req);
-      return json(res, 201, await addHabits(body));
-    }
-    if (req.method === 'PATCH') {
-      const body = await bodyJSON(req);
-      const u = await patchHabits(id, body);
-      return u ? json(res, 200, u) : json(res, 404, { error: 'Not found' });
-    }
-    if (req.method === 'DELETE') {
-      const ok = await deleteHabits(id);
-      return ok ? json(res, 204) : json(res, 404, { error: 'Not found' });
-    }
-    json(res, 405, { error: 'Method not allowed' });
-  } catch (e) {
-    json(res, 500, { error: e.message });
-  }
+export function handleAdd(name) {
+  service.addHabit(name);
 }
 
-/* ---------- helpers ---------- */
-function json(res, status, data = null) {
-  res.writeHead(status, { 'Content-Type': 'application/json' });
-  if (data) res.end(JSON.stringify(data));
-  else res.end();
+export function handleList() {
+  const habits = service.listHabits();
+  console.log(habits);
 }
 
-function bodyJSON(req) {
-  return new Promise((resolve, reject) => {
-    let raw = '';
-    req.on('data', (c) => (raw += c));
-    req.on('end', () => {
-      try { resolve(JSON.parse(raw || '{}')); }
-      catch { reject(new Error('Invalid JSON')); }
-    });
-  });
+export function handleDone(id) {
+  service.markHabitDone(id);
+}
+
+export function handleDelete(id) {
+  service.deleteHabit(id);
+}
+
+export function handleUpdate(id, newName) {
+  service.updateHabit(id, newName);
 }

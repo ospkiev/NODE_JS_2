@@ -1,17 +1,9 @@
-import http from 'node:http';
-import { handle as habitsCtrl } from './controllers/habits.controller.js';
+import dotenv from 'dotenv';
+dotenv.config();
 
-const PORT = process.env.PORT || 3000;
+console.log('ENV-content:', process.env.SECRET_KEY);
+import { routeCommand } from './router/router.js';
 
-const server = http.createServer((req, res) => {
-  console.log('first')
-  const [, resource, id] = req.url.split('/');
-  if (resource === 'habits') {
-    return habitsCtrl(req, res, id ? Number(id) : null);
-  }
-  res.writeHead(404).end('Not found');
-});
+const [, , command, ...args] = process.argv;
 
-server.listen(PORT, () => {
-  console.log(`http://localhost:${PORT}`);
-});
+routeCommand(command, args);
