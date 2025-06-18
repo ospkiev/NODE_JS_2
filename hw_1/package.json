@@ -3,7 +3,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "lint": "eslint src",
+    "lint": "eslint .",
     "lint:fix": "eslint src --fix"
   },
   "devDependencies": {

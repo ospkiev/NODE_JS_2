@@ -16,7 +16,7 @@ export default defineConfig([
     rules: {
       "semi": ['error', 'always'],
       "quotes": ['error', 'single'],
-      "no-console": ['error']
+      "no-console": ['error', 'always']
     }
   },
 ]);
