@@ -30,11 +30,11 @@ npm install
 ```
 
 Команди
-node index.js add --name "Читати книгу"
-node index.js list
-node index.js done --id <id> (конкретне id можно знайти у елемента в файлі database.json !!!)
-node index.js delete --id <id>
-node index.js update --id <id> --name "Нова назва"
+node index.js add --name "Читати книгу"\
+node index.js list\
+node index.js done --id <id> (конкретне id можно знайти у елемента в файлі database.json !!!)\
+node index.js delete --id <id>\
+node index.js update --id <id> --name "Нова назва"\
 node index.js stats
 
 Після виконання команд, дані будуть збережені у файлі database.json.
