@@ -1,4 +1,4 @@
-import { getUser, updateUser, deleteUser } from '../../../services/users.service.js';
+import { getUser, updateUser, deleteUser } from '../../services/users.service.js';
 
 export async function GET(req, res, id) {
   const user = await getUser(id);

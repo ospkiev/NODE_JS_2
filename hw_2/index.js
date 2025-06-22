@@ -1,26 +1,14 @@
-// import http from 'http';
-// import myrouter from './router.js';
-
-// const PORT = process.env.PORT || 3000;
-
-// const server = http.createServer((req, res) => {
-//   myrouter(req, res).catch(err => {
-//     res.writeHead(500, { 'Content-Type': 'application/json' });
-//     res.end(JSON.stringify({ error: 'Internal Server Error' }));
-//     console.error(err);
-//   });
-// });
-
-// server.listen(PORT, () => {
-//   console.log(`Server running at http://localhost:${PORT}`);
-// });
-
 import http from 'http';
-import handle from './routes/users/route.js';
+import { router } from './lib/router.js';
+
 const PORT = process.env.PORT || 3000;
 
 const server = http.createServer((req, res) => {
-  handle(req, res);
+  router(req, res).catch(err => {
+    res.writeHead(500, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ error: 'Internal Server Error' }));
+    console.error(err);
+  });
 });
 
 server.listen(PORT, () => {
