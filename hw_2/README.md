@@ -2,6 +2,7 @@
 
 ## Project Structure
 
+```
 hw_2/
 ├── routes/                   
 │   └── users/
@@ -15,6 +16,7 @@ hw_2/
 ├── index.js                  
 ├── package.json
 └── README.md
+```
 
 ## Installation
 
