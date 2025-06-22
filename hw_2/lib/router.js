@@ -26,11 +26,9 @@ function matchRoute(routePath, requestPath) {
   
   for (let i = 0; i < routeParts.length; i++) {
     if (routeParts[i].startsWith(':') || (routeParts[i].startsWith('[') && routeParts[i].endsWith(']'))) {
-      // Dynamic parameter
       const paramName = routeParts[i].startsWith(':') ? routeParts[i].slice(1) : routeParts[i].slice(1, -1);
       params[paramName] = requestParts[i];
     } else if (routeParts[i] !== requestParts[i]) {
-      // Static path doesn't match
       return null;
     }
   }
@@ -48,7 +46,6 @@ async function scanRoutes(dir = routesDir, basePath = '') {
       const fullPath = path.join(dir, entry.name);
       
       if (entry.isDirectory()) {
-        // Check if it's a dynamic route (starts with [ and ends with ])
         if (entry.name.startsWith('[') && entry.name.endsWith(']')) {
           const paramName = entry.name.slice(1, -1);
           const subRoutes = await scanRoutes(fullPath, `${basePath}/:${paramName}`);
@@ -63,7 +60,6 @@ async function scanRoutes(dir = routesDir, basePath = '') {
           filePath: fullPath
         });
       } else if (entry.name.endsWith('.route.js')) {
-        // Handle file-based dynamic routes like [id].route.js
         const fileName = entry.name.replace('.route.js', '');
         if (fileName.startsWith('[') && fileName.endsWith(']')) {
           const paramName = fileName.slice(1, -1);
@@ -93,11 +89,9 @@ export async function router(req, res) {
   console.log(`Request: ${method} ${pathname}`);
   
   try {
-    // Scan for routes
     const routes = await scanRoutes();
     console.log('Available routes:', routes.map(r => ({ path: r.path, file: r.filePath })));
     
-    // Find matching route
     let matchedRoute = null;
     let routeParams = null;
     
@@ -119,7 +113,6 @@ export async function router(req, res) {
     
     console.log('Matched route:', matchedRoute.path, 'with params:', routeParams);
     
-    // Import and execute the route handler
     const routeModule = await import(url.pathToFileURL(matchedRoute.filePath));
     const handler = getMethodHandler(routeModule, method);
     
@@ -128,9 +121,8 @@ export async function router(req, res) {
       return res.end(JSON.stringify({ error: 'Method Not Allowed' }));
     }
     
-    // Call handler with params
     if (routeParams && Object.keys(routeParams).length > 0) {
-      const paramValue = Object.values(routeParams)[0]; // For simple cases like /users/:id
+      const paramValue = Object.values(routeParams)[0];
       return handler(req, res, paramValue);
     } else {
       return handler(req, res);
