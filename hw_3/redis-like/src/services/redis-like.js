@@ -18,10 +18,8 @@ async function writeDatabase(data) {
 
 export async function addValue(value) {
   const data = await readDatabase();
-  const obj = { value };
-  data.push(obj);
+  data.push({ value });
   await writeDatabase(data);
-  return obj;
 }
 
 export async function findValue(value) {
