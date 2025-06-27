@@ -14,6 +14,8 @@ services:
       - "4000"
     environment:
       - PORT=4000
+    volumes:
+      - ./redis-like/src/database.json:/app/database.json
 
   kv:
     build:
@@ -28,6 +30,8 @@ services:
       - "8080:3000"
     environment:
       - REDIS_URL=http://redis:4000
+    volumes:
+      - ./kv/src/database.json:/app/database.json
 
 networks:
   internal:
