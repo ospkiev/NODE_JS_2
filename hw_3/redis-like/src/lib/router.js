@@ -6,7 +6,6 @@ export async function router(req, res) {
   
   console.log(`Request: ${method} ${pathname}`);
   
-  // Handle GET /redis-like?key=foo
   if (method === 'GET' && pathname === '/redis-like') {
     try {
       const parsedUrl = new URL(req.url, 'http://localhost');
@@ -29,7 +28,6 @@ export async function router(req, res) {
     return;
   }
   
-  // Handle POST /redis-like?set
   if (method === 'POST' && pathname === '/redis-like') {
     const parsedUrl = new URL(req.url, 'http://localhost');
     const setParam = parsedUrl.searchParams.get('set');
@@ -61,7 +59,6 @@ export async function router(req, res) {
     }
   }
   
-  // Handle all other routes
   res.writeHead(404, { 'Content-Type': 'application/json' });
   res.end(JSON.stringify({ error: 'Not Found' }));
 }

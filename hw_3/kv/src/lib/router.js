@@ -7,7 +7,6 @@ export async function router(req, res) {
 
   console.log(`Request: ${method} ${parsedUrl.pathname}`);
 
-  // GET /kv/:key
   if (method === 'GET' && pathParts[0] === 'kv' && pathParts.length === 2) {
     const key = pathParts[1];
     try {
@@ -27,7 +26,6 @@ export async function router(req, res) {
     return;
   }
 
-  // POST /kv
   if (method === 'POST' && pathParts[0] === 'kv' && pathParts.length === 1) {
     let body = '';
     req.on('data', chunk => body += chunk);
@@ -51,7 +49,6 @@ export async function router(req, res) {
     return;
   }
 
-  // Not found
   res.writeHead(404, { 'Content-Type': 'application/json' });
   res.end(JSON.stringify({ error: 'Not Found' }));
 } 
