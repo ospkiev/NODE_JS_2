@@ -1,7 +1,9 @@
 Посилання на образи в DockerHub
 
-https://hub.docker.com/repository/docker/karpenkopd/redis-like/general\n
-https://hub.docker.com/repository/docker/karpenkopd/kv/general
+1. https://hub.docker.com/repository/docker/karpenkopd/redis-like/general
+2. https://hub.docker.com/repository/docker/karpenkopd/kv/general
+
+## Як запустити додатки
 
 1. Сколнити репозиторій https://github.com/ospkiev/NODE_JS_2/tree/main/hw_3, перейти в папку /hw_3
 2. Підняти (запустити) Docker daemon на власній машині.
