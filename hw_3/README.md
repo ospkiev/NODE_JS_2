@@ -1,6 +1,6 @@
 Посилання на образи в DockerHub
 
-https://hub.docker.com/repository/docker/karpenkopd/redis-like/general\
+https://hub.docker.com/repository/docker/karpenkopd/redis-like/general\n
 https://hub.docker.com/repository/docker/karpenkopd/kv/general
 
 1. Сколнити репозиторій https://github.com/ospkiev/NODE_JS_2/tree/main/hw_3, перейти в папку /hw_3
