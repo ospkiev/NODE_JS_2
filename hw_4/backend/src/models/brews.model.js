@@ -19,14 +19,14 @@ export class BrewsModel {
   create(dto) {
     const id = nanoid(8);
     const brews = { id, ...dto };
-    this.#store.set(id, user);
+    this.#store.set(id, brews);
     return brews;
   }
 
   update(id, dto) {
     if (!this.#store.has(id)) return null;
     const brews = { id, ...dto };
-    this.#store.set(id, user);
+    this.#store.set(id, brews);
     return brews;
   }
 

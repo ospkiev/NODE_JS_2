@@ -4,7 +4,7 @@ import { BrewsService } from './services/brews.service.js';
 import { BrewsController } from './controllers/brews.controller.js';
 import { objectMap } from "./utils/Object.map.js";
 
-const usersModule = {
+const brewsModule = {
   // DATA
   brewsModel: BrewsModel,
   // BUSINESS
@@ -21,5 +21,5 @@ const usersModule = {
 
 export const container = createContainer({ injectionMode: 'CLASSIC' })
   .register(
-    objectMap(usersModule, value => asClass(value)[value.scope]())
+    objectMap(brewsModule, value => asClass(value)[value.scope]())
   );

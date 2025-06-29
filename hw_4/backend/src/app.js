@@ -10,13 +10,13 @@ import { config } from './config/index.js';
 import { container } from './container.js';
 import { scopePerRequest } from 'awilix-express';
 import swaggerUi from 'swagger-ui-express';
-import {generateSpecs} from './docs/index.js';
+import { generateSpecs } from './docs/index.js';
 import { notFound } from './middlewares/notFound.js';
 import { errorHandler } from './middlewares/errorHandler.js';
-import { router as usersRouter } from './routes/users.routes.js';
+import { router as brewsRouter } from './routes/brews.routes.js';
 import { router as uploadsRouter } from './routes/uploads.routes.js';
-import {upload} from "./libs/multer.js";
-import {attachStaticHandler} from "./static/attach-static-handler.js";
+import { upload } from "./libs/multer.js";
+import { attachStaticHandler } from "./static/attach-static-handler.js";
 
 const uploadDir = path.resolve('uploads');
 
@@ -54,7 +54,7 @@ export function createApp() {
   }));
 
   // morgan('dev')  ➜  Людські access-логи під час розробки
-  // • GET /users 200 12.3 ms – 1.2 kB
+  // • GET /brewss 200 12.3 ms – 1.2 kB
   // • Формат 'dev' без кольорів → видно у терміналі nodemon.
   app.use(morgan('dev'));
 
@@ -73,7 +73,7 @@ export function createApp() {
 
   // DI scope-per-request (Awilix)
   // • Створює дочірній контейнер на кожен HTTP-запит.
-  // • У нього резолвляться UsersModel → UsersService → UsersController,
+  // • У нього резолвляться BrewsModel → BrewsService → BrewsController,
   //   тому стейт не “тече” між паралельними запитами.
   app.use(scopePerRequest(container));
 
@@ -99,9 +99,9 @@ export function createApp() {
   }
 
   // API-маршрути (REST + валідація + DI)
-  // •  /api/users      CRUD через UsersController
-  // •  Всі роути всередині вже мають validate(UserDTO) і asyncHandler.
-  app.use('/api', usersRouter);
+  // •  /api/brews      CRUD через BrewsController
+  // •  Всі роути всередині вже мають validate(BrewsDTO) і asyncHandler.
+  app.use('/api', brewsRouter);
 
   // 404 «Маршрут не знайдено»
   // • Спрацьовує лише, якщо жоден попередній middleware не надіслав

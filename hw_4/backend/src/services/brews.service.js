@@ -10,9 +10,9 @@ export class BrewsService {
   }
 
   getOne(id) {
-    const user = this.brewsModel.find(id);
-    if (!user) throw Object.assign(new Error('Brews not found'), { status: 404 });
-    return user;
+    const data = this.brewsModel.find(id);
+    if (!data) throw Object.assign(new Error('Brews not found'), { status: 404 });
+    return data;
   }
 
   create(dto) {
@@ -20,9 +20,9 @@ export class BrewsService {
   }
 
   update(id, dto) {
-    const user = this.brewsModel.update(id, dto);
-    if (!user) throw Object.assign(new Error('Brews not found'), { status: 404 });
-    return user;
+    const data = this.brewsModel.update(id, dto);
+    if (!data) throw Object.assign(new Error('Brews not found'), { status: 404 });
+    return data;
   }
 
   delete(id) {

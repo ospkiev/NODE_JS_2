@@ -43,7 +43,7 @@ registry.registerPath({
   tags: ['Brews'],
   request: { params: paramsSchema }, // опис path-param
   responses: {
-    200: { description: 'Brews', content: { 'application/json': { schema: UserDTO } } },
+    200: { description: 'Brews', content: { 'application/json': { schema: BrewsDTO } } },
     404: { description: 'Brews not found' }
   }
 })
