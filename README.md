@@ -1,1 +1,1 @@
-This rep with me homeworks for Node.js course
+This rep with my homeworks for Node.js course

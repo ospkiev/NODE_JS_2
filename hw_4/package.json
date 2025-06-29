@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "server": "npm --prefix backend run dev",
+    "server:static": "npm run build:frontend && npm --prefix backend run dev",
+    "dev": "concurrently -k \"npm --prefix backend run dev\" \"npm --prefix frontend run dev\"",
+    "build:frontend": "npm --prefix frontend run build && rm -rf build && cp -R frontend/dist ./build",
+    "build": "npm run build:frontend && npm --prefix backend run build"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "vite": "^7.0.0"
+  }
+}
