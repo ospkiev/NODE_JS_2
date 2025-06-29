@@ -1,21 +1,21 @@
 import { useState, useCallback, useEffect } from 'react';
-import { fetchUsers, createUser } from '../api/users.js';
+import { fetchBrews, createUser } from '../api/users.js';
 
 /**
  * Реактовий data-layer для users.
  * Повертає стани та методи `refresh` і `add`.
  */
 export function useUsers() {
-  const [users,   setUsers]   = useState([]);
+  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error,   setError]   = useState(null);
+  const [error, setError] = useState(null);
 
   /* ---------- load ---------- */
   const load = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
-      setUsers(await fetchUsers());
+      setUsers(await fetchBrews());
     } catch (e) {
       setError(e);
     } finally {

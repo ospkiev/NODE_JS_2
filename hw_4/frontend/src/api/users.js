@@ -3,22 +3,22 @@ const baseUrl = import.meta.env.DEV ?
   window.location.origin;
 
 /**
- * GET /api/users – повертає [{ id, name, email }, …]
+ * GET /api/brews – повертає [{ id, beans, method, ... }, …]
  */
-export async function fetchUsers() {
-  const url = new URL('/api/users', baseUrl);
+export async function fetchBrews() {
+  const url = new URL('/api/brews', baseUrl);
   const res = await fetch(url);
-  if (!res.ok) throw new Error(`Fetch users failed: ${res.status}`);
+  if (!res.ok) throw new Error(`Fetch brews failed: ${res.status}`);
   return res.json();      // -> array
 }
 
 /**
- * POST /api/users – створює нового користувача
- * @param {{ name: string, email: string }} body
- * @return {Promise<{ id:number, name:string, email:string }>}
+ * POST /api/brews – створює нового користувача
+ * @param {{ beans: string, method: string }} body
+ * @return {Promise<{ id:number, beans:string, method:string }>}
  */
 export async function createUser(body) {
-  const url = new URL('/api/users', baseUrl);
+  const url = new URL('/api/brews', baseUrl);
   const res = await fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -28,5 +28,5 @@ export async function createUser(body) {
     const { errors } = await res.json().catch(() => ({}));
     throw new Error(errors ? JSON.stringify(errors) : `Create failed: ${res.status}`);
   }
-  return res.json();      // -> created user
+  return res.json();      // -> created brews
 }
