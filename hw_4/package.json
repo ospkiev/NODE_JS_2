@@ -7,7 +7,6 @@
     "build": "npm run build:frontend && npm --prefix backend run build"
   },
   "devDependencies": {
-    "concurrently": "^8.2.2",
-    "vite": "^7.0.0"
+    "concurrently": "^8.2.2"
   }
 }

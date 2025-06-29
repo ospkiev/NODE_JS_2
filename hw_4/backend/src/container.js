@@ -1,16 +1,16 @@
 import { createContainer, asClass } from 'awilix';
-import { UsersModel }       from './models/users.model.js';
-import { UsersService }     from './services/users.service.js';
-import { UsersController }  from './controllers/users.controller.js';
-import {objectMap} from "./utils/Object.map.js";
+import { BrewsModel } from './models/brews.model.js';
+import { BrewsService } from './services/brews.service.js';
+import { BrewsController } from './controllers/brews.controller.js';
+import { objectMap } from "./utils/Object.map.js";
 
 const usersModule = {
   // DATA
-  usersModel: UsersModel,
+  brewsModel: BrewsModel,
   // BUSINESS
-  usersService: UsersService,
+  brewsService: BrewsService,
   // HTTP
-  usersController: UsersController
+  brewsController: BrewsController
 }
 
 /**

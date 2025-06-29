@@ -7,11 +7,11 @@ export const validateParams = schema => (req, res, next) => {
       .json({ errors: result.error.format(), where: 'params' });
   }
 
-  req.params =  {
+  // req.params = result.data;   // ← нормалізовані, гарантовано валідні
+  // Але правільніше так
+  req.params = {
     ...req.params,
-    ...result.data
-  }
-  
-  // result.data;   // ← нормалізовані, гарантовано валідні
+    ...result.data,
+  };   // ← нормалізовані, гарантовано валідні
   next();
 };

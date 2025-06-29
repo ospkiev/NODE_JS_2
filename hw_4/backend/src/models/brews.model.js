@@ -1,11 +1,11 @@
-import {nanoid} from 'nanoid';
+import { nanoid } from 'nanoid';
 
-export class UsersModel {
+export class BrewsModel {
   static scope = 'singleton';
   #store = new Map();
 
   constructor() {
-    console.log(`UsersModel initialized`);
+    console.log(`BrewsModel initialized`);
   }
 
   all() {
@@ -18,16 +18,16 @@ export class UsersModel {
 
   create(dto) {
     const id = nanoid(8);
-    const user = {id, ...dto};
+    const brews = { id, ...dto };
     this.#store.set(id, user);
-    return user;
+    return brews;
   }
 
   update(id, dto) {
     if (!this.#store.has(id)) return null;
-    const user = {id, ...dto};
+    const brews = { id, ...dto };
     this.#store.set(id, user);
-    return user;
+    return brews;
   }
 
   remove(id) {
