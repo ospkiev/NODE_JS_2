@@ -13,6 +13,8 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/src ./src
 COPY build ./build
 COPY uploads ./uploads
+COPY src/docs/upload.yaml ./src/docs/upload.yaml
+COPY src/docs/upload.yaml ./upload.yaml
 COPY package.json ./
 USER 1000
 ENTRYPOINT ["/sbin/tini","--"]

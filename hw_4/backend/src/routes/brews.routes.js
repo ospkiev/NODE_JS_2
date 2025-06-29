@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { z } from 'zod';
 import { makeClassInvoker } from 'awilix-express';
+import rateLimit from 'express-rate-limit';
 
 import { BrewsController } from '../controllers/brews.controller.js';
 import { asyncHandler } from '../middlewares/asyncHandler.js';
@@ -11,6 +12,18 @@ import { validateParams } from "../middlewares/validateParams.js";
 
 const router = Router();
 const ctl = makeClassInvoker(BrewsController);
+
+// Rate limiter for POST /brews - 10 requests per minute
+const brewsPostRateLimit = rateLimit({
+  windowMs: 60 * 1000, // 1 minute
+  max: 10, // limit each IP to 10 requests per windowMs
+  message: {
+    error: 'Too many POST requests to /api/brews, please try again later.',
+    retryAfter: '60 seconds'
+  },
+  standardHeaders: true,
+  legacyHeaders: false, 
+});
 
 const paramsSchema = z.object({
   id: z.string().describe('Brews ID') // опис path-param
@@ -50,6 +63,7 @@ registry.registerPath({
 
 router.post(
   '/brews',
+  brewsPostRateLimit, // Apply rate limiting before validation
   validate(BrewsDTO),
   asyncHandler(ctl('create'))
 );
@@ -58,11 +72,41 @@ registry.registerPath({
   path: '/api/brews',
   tags: ['Brews'],
   request: {
-    body: { required: true, content: { 'application/json': { schema: BrewsDTO } } }
+    body: { 
+      required: true, 
+      content: { 
+        'application/json': { 
+          schema: BrewsDTO,
+          example: {
+            beans: "Ethiopian Yirgacheffe",
+            method: "Pour Over",
+            rating: 4,
+            notes: "Bright and floral with citrus notes",
+            brew_at: "2024-01-15T10:30:00Z"
+          }
+        } 
+      } 
+    }
   },
   responses: {
     201: { description: 'Created', content: { 'application/json': { schema: BrewsDTO } } },
-    400: { description: 'Validation error' }
+    400: { 
+      description: 'Validation error - missing required fields or invalid data',
+      content: {
+        'application/json': {
+          schema: z.object({
+            error: z.string(),
+            message: z.string(),
+            details: z.array(z.object({
+              field: z.string(),
+              message: z.string(),
+              code: z.string()
+            }))
+          })
+        }
+      }
+    },
+    429: { description: 'Too many requests - rate limit exceeded (10 POST requests per minute)' }
   }
 })
 

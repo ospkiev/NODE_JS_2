@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import { fetchBrews, createUser } from '../api/users.js';
+import { fetchBrews, createBrews } from '../api/users.js';
 
 /**
  * Реактовий data-layer для users.
@@ -27,7 +27,7 @@ export function useUsers() {
   const add = useCallback(async (user) => {
     try {
       setLoading(true);
-      const created = await createUser(user);
+      const created = await createBrews(user);
 
       // оптимістично додаємо в кеш (без ще одного GET)
       setUsers(prev => [...prev, created]);

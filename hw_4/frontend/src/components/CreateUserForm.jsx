@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './create-user-form.css';
 
-const initialState = { name: '', email: '' };
+const initialState = { beans: '', method: '', rating: '', notes: '', brew_at: '' };
 
 export function CreateUserForm({ onSubmit }) {
   const [values, setValues] = useState(initialState);
@@ -56,7 +56,7 @@ export function CreateUserForm({ onSubmit }) {
           name='rating'
           value={values.rating}
           onChange={handleChange}
-          placeholder='від 1 до 10'
+          placeholder='від 1 до 5'
           disabled={loading}
         />
       </label>
@@ -77,7 +77,7 @@ export function CreateUserForm({ onSubmit }) {
         <input
           className='cuf-input'
           type='text'
-          name='Brew_at'
+          name='brew_at'
           value={values.brew_at}
           onChange={handleChange}
           placeholder='Час/дата'

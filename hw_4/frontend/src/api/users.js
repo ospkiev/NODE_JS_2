@@ -17,7 +17,7 @@ export async function fetchBrews() {
  * @param {{ beans: string, method: string }} body
  * @return {Promise<{ id:number, beans:string, method:string }>}
  */
-export async function createUser(body) {
+export async function createBrews(body) {
   const url = new URL('/api/brews', baseUrl);
   const res = await fetch(url, {
     method: 'POST',
