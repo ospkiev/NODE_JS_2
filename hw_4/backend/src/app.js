@@ -93,7 +93,7 @@ export function createApp() {
   // •  `generateSpecs()`  об’єднує Zod-DTO, JSDoc і YAML-upload у єдину OpenAPI.
   // •  `/docs` дає Swagger-UI, щоб швидко тестувати запити.
   // •  baseUrl читаємо з конфігу, в консоль — корисний hint для розробника.
-  if (config.env === 'development') {
+  if (process.env.ENABLE_SWAGGER === 'true' || config.env === 'development') {
     app.use('/docs', swaggerUi.serve, swaggerUi.setup(generateSpecs()));
     console.log(`Swagger docs → ${config.baseUrl}/docs`);
   }
