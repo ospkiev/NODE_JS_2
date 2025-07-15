@@ -1,11 +1,11 @@
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
-import { ImagesModule } from './images/images.module';
+import { ZipModule } from './zip/zip.module';
 import { LoggerMiddleware } from './middleware/logger.middleware';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
-    ImagesModule,
+    ZipModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
@@ -13,6 +13,6 @@ import { ConfigModule } from '@nestjs/config';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LoggerMiddleware).forRoutes('images');
+    consumer.apply(LoggerMiddleware).forRoutes('zip');
   }
 }
